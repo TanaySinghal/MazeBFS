@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Queue;
 
+//TODO: empty out path
 
 public class Traverser {
     static final char emptyBlock = ' ';
@@ -42,10 +43,12 @@ public class Traverser {
         for(File file : files) {
             String fileName = file.getName();
             if(fileName.contains(".txt")) {
+                path = new ArrayList<String>();
                 charArray = buildArrayFromTextFile(file);
                 System.out.println(fileName + ":");
                 printBoard();
                 
+                //Remove previous solution
                 Node solution = getSolution();
                 
                 if(solution == null) {
@@ -90,6 +93,7 @@ public class Traverser {
     
     //Convert text file to 2D char array
     char[][] buildArrayFromTextFile (File _mazeFile) {
+        
         List<String> lines = new ArrayList<String>();
         
         try {
@@ -146,6 +150,7 @@ public class Traverser {
             for (Node childState : testNode.getChildren()) {
                 if(!exploredCoords.contains(childState.coords) && !list.contains(childState)) {
                     if (childState.reachedGoal()) {
+                        testNode = null;
                         return childState;
                     }
                     if(childState.isLegal()) {
