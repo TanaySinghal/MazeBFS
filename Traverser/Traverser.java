@@ -37,21 +37,26 @@ public class Traverser {
     }
     
     Traverser() {
-        for (int i = 0; i < mazeFiles.length; i ++ ) {
-            charArray = buildArrayFromTextFile(filePath + mazeFiles[i]);
-            System.out.println(mazeFiles[i] + ":");
-            printBoard();
-            
-            Node solution = getSolution();
-            
-            if(solution == null) {
-                System.out.println("No solution");
-            }
-            else {
-                System.out.println("Solution: ");
-                solution.getSolutionCoords();
-                printSolution();
-                //System.out.println(solution.toString());
+        File folder = new File("../Maze/");
+        File[] files = folder.listFiles();
+        for(File file : files) {
+            String fileName = file.getName();
+            if(fileName.contains(".txt")) {
+                charArray = buildArrayFromTextFile(file);
+                System.out.println(fileName + ":");
+                printBoard();
+                
+                Node solution = getSolution();
+                
+                if(solution == null) {
+                    System.out.println("No solution");
+                }
+                else {
+                    System.out.println("Solution: ");
+                    solution.getSolutionCoords();
+                    printSolution();
+                    //System.out.println(solution.toString());
+                }
             }
         }
     }
@@ -84,12 +89,11 @@ public class Traverser {
     }
     
     //Convert text file to 2D char array
-    char[][] buildArrayFromTextFile (String _mazeFile) {
+    char[][] buildArrayFromTextFile (File _mazeFile) {
         List<String> lines = new ArrayList<String>();
-        File file = new File(_mazeFile);
         
         try {
-            Scanner sc = new Scanner(file);
+            Scanner sc = new Scanner(_mazeFile);
             while (sc.hasNextLine()) {
                 String line = sc.nextLine();
                 //store this line to string [] here
@@ -97,7 +101,7 @@ public class Traverser {
             }
         }
         catch (FileNotFoundException e) {
-            System.out.println("Error: File not found");
+            System.out.println("Error: Maze file not found");
         }
         
         //Calculate maze width and height
