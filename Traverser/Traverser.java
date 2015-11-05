@@ -14,6 +14,7 @@ public class Traverser {
     static final char emptyBlock = ' ';
     static final char startBlock = 'S';
     static final char goalBlock = 'G';
+    static final char pathMarking = '0';
 
     //Do not change below this line
     //-----------------------------
@@ -67,7 +68,7 @@ public class Traverser {
             for(int j = 0; j < mazeWidth; j ++) {
                 String currentCoords = i+","+j;
                 if(path.contains(currentCoords)) {
-                    System.out.print(ANSI_RED + '0' + AINSI_BLACK);
+                    System.out.print(ANSI_RED + pathMarking + AINSI_BLACK);
                 }
                 else {
                     System.out.print(charArray[i][j]);
