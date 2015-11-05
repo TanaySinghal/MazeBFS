@@ -12,9 +12,10 @@ import java.util.Queue;
 
 public class Traverser {
     static final char emptyBlock = ' ';
-    static final char startBlock = 'S';
-    static final char goalBlock = 'G';
-    static final char pathMarking = '0';
+    final char startBlock = 'S';
+    final char goalBlock = 'G';
+    final char pathMarking = '0';
+    final String[] mazeFiles = {"maze1.txt", "maze2.txt", "maze3.txt"};
 
     //Do not change below this line
     //-----------------------------
@@ -35,19 +36,21 @@ public class Traverser {
     }
 
     Traverser() {
-        charArray = buildArrayFromTextFile();
-        printBoard();
+        for (int i = 0; i < mazeFiles.length; i ++ ) {
+            charArray = buildArrayFromTextFile(mazeFiles[i]);
+            printBoard();
 
-        Node solution = getSolution();
+            Node solution = getSolution();
 
-        if(solution == null) {
-            System.out.println("No solution");
-        }
-        else {
-            System.out.println("Solution: ");
-            solution.getSolutionCoords();
-            printSolution();
-            //System.out.println(solution.toString());
+            if(solution == null) {
+                System.out.println("No solution");
+            }
+            else {
+                System.out.println("Solution: ");
+                solution.getSolutionCoords();
+                printSolution();
+                //System.out.println(solution.toString());
+            }
         }
     }
 
@@ -59,8 +62,8 @@ public class Traverser {
             }
         }
         System.out.println("\n");
-
     }
+
     //Print path in red
     void printSolution() {
         for(int i = 0; i < mazeHeight; i ++) {
@@ -77,10 +80,11 @@ public class Traverser {
         }
         System.out.println("\n");
     }
+
     //Convert text file to 2D char array
-    char[][] buildArrayFromTextFile () {
+    char[][] buildArrayFromTextFile (String _mazeFile) {
         List<String> lines = new ArrayList<String>();
-        File file = new File("maze.txt");
+        File file = new File(_mazeFile);
 
         try {
             Scanner sc = new Scanner(file);
