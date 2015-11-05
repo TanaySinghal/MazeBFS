@@ -16,32 +16,34 @@ public class Traverser {
     final char goalBlock = 'G';
     final char pathMarking = '0';
     final String[] mazeFiles = {"maze1.txt", "maze2.txt", "maze3.txt"};
-
+    final String filePath = "";
+    
     //Do not change below this line
     //-----------------------------
     public static int mazeWidth, mazeHeight;
     public static int startY, startX, goalX, goalY;
-
+    
     public static char[][] charArray;
-
+    
     //List with path coordinates
     public static List<String> path = new ArrayList<String>();
-
+    
     //Text colors
     public static final String AINSI_BLACK = "\u001B[30m";
     public static final String ANSI_RED = "\u001B[31m";
-
+    
     public static void main(String[] args) {
         new Traverser();
     }
-
+    
     Traverser() {
         for (int i = 0; i < mazeFiles.length; i ++ ) {
-            charArray = buildArrayFromTextFile(mazeFiles[i]);
+            charArray = buildArrayFromTextFile(filePath + mazeFiles[i]);
+            System.out.println(mazeFiles[i] + ":");
             printBoard();
-
+            
             Node solution = getSolution();
-
+            
             if(solution == null) {
                 System.out.println("No solution");
             }
@@ -53,7 +55,7 @@ public class Traverser {
             }
         }
     }
-
+    
     void printBoard() {
         for(int i = 0; i < mazeHeight; i ++) {
             System.out.println();
@@ -63,7 +65,7 @@ public class Traverser {
         }
         System.out.println("\n");
     }
-
+    
     //Print path in red
     void printSolution() {
         for(int i = 0; i < mazeHeight; i ++) {
@@ -80,12 +82,12 @@ public class Traverser {
         }
         System.out.println("\n");
     }
-
+    
     //Convert text file to 2D char array
     char[][] buildArrayFromTextFile (String _mazeFile) {
         List<String> lines = new ArrayList<String>();
         File file = new File(_mazeFile);
-
+        
         try {
             Scanner sc = new Scanner(file);
             while (sc.hasNextLine()) {
@@ -97,17 +99,17 @@ public class Traverser {
         catch (FileNotFoundException e) {
             System.out.println("Error: File not found");
         }
-
+        
         //Calculate maze width and height
         mazeWidth = lines.get(0).length();
         mazeHeight = lines.size();
-
+        
         //Convert to array
         char[][] array = new char[mazeHeight][mazeWidth];
-
+        
         for(int i = 0; i < mazeHeight; i ++) {
             array[i] = lines.get(i).toCharArray();
-
+            
             //Find start and goal coordinates
             for(int j = 0; j < mazeWidth; j ++) {
                 if(array[i][j] == goalBlock) {
@@ -120,23 +122,23 @@ public class Traverser {
                 }
             }
         }
-
+        
         return array;
     }
-
+    
     public static Node getSolution() {
         Queue<Node> list = new LinkedList<Node>();
         Queue<String> exploredCoords = new LinkedList<String>();
-
+        
         //starting on right side but cr, mr, cl, ml because solution is printed backwards..
         Node initialNode = new Node(startY, startX, null);
         list.add(initialNode);
-
+        
         while (!list.isEmpty()) {
             //Set this testNode equal to the first (FIFO) element and remove it
             Node testNode = list.remove();
             exploredCoords.add(testNode.coords);
-
+            
             for (Node childState : testNode.getChildren()) {
                 if(!exploredCoords.contains(childState.coords) && !list.contains(childState)) {
                     if (childState.reachedGoal()) {
