@@ -16,7 +16,6 @@ public class Traverser {
     final char startBlock = 'S';
     final char goalBlock = 'G';
     final char pathMarking = '0';
-    final String[] mazeFiles = {"maze1.txt", "maze2.txt", "maze3.txt"};
     final String filePath = "";
     
     //Do not change below this line

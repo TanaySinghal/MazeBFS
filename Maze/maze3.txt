@@ -1,7 +1,0 @@
-xxxxxxxxxxxxxxxxxxSx
-x             xxxx x
-x xxxxxxxxxxx   xx x
-x xxxxxxxxxxxxx xx x
-x            xx xx x
-x xxxxxxxxxx xx    x
-xxxxxxxxxxxxGxxxxxxx
