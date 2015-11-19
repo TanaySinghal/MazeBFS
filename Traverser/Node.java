@@ -32,7 +32,8 @@ public class Node {
 
         return children;
     }
-
+    
+    //Recursively return solution
     public void getSolutionCoords() {
         Traverser.path.add(coords);
         if(parentNode != null) {
@@ -40,7 +41,8 @@ public class Node {
         }
 
     }
-
+    
+    //Check if we've reached goal
     public boolean reachedGoal() {
         return x == Traverser.goalX && y == Traverser.goalY;
     }

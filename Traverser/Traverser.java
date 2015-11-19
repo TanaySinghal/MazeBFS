@@ -37,6 +37,7 @@ public class Traverser {
     }
     
     Traverser() {
+        //Read maze text files
         File folder = new File("../Maze/");
         File[] files = folder.listFiles();
         for(File file : files) {
@@ -47,7 +48,7 @@ public class Traverser {
                 System.out.println(fileName + ":");
                 printBoard();
                 
-                //Remove previous solution
+                //Find solution
                 Node solution = getSolution();
                 
                 if(solution == null) {
@@ -137,7 +138,7 @@ public class Traverser {
         Queue<Node> list = new LinkedList<Node>();
         Queue<String> exploredCoords = new LinkedList<String>();
         
-        //starting on right side but cr, mr, cl, ml because solution is printed backwards..
+        //Make an initial parent node of our first possible move
         Node initialNode = new Node(startY, startX, null);
         list.add(initialNode);
         
@@ -146,13 +147,18 @@ public class Traverser {
             Node testNode = list.remove();
             exploredCoords.add(testNode.coords);
             
+            //Loop through all the move options
             for (Node childState : testNode.getChildren()) {
+                //Check if this move option has been explored before
                 if(!exploredCoords.contains(childState.coords) && !list.contains(childState)) {
+                    //If we've reached goal, return solution
                     if (childState.reachedGoal()) {
                         testNode = null;
                         return childState;
                     }
+                    //Otherwise, if the move option is a valid path (not a wall)
                     if(childState.isLegal()) {
+                        //Add move option to list
                         list.add(childState);
                     }
                 }
